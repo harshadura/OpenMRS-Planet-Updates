@@ -1,0 +1,327 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>My Page</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">$(document).bind("mobileinit", function () {  $.mobile.defaultPageTransition = "none"; });</script>
+    <script type="text/javascript" src="js/jquery.mobile-1.2.0.min.js"></script>
+    <script src="cordova-2.2.0.js"></script>
+    <script src ="childbrowser.js"></script>
+    <script src ="share.js"></script>
+</head> 
+<body> 
+
+<div data-role="page" id = "viewPage">
+    <div data-role="header" data-theme="b" data-tap-toggle="false" height:"50px;" style = "text-align:center;">
+        <img src = "media/omrs.png"/>
+        <div data-role="navbar">
+            <ul id = "navigation">
+                <li><a href="#viewPage" id="#nav1" class="ui-btn-active ui-state-persist">Home</a></li>
+                <li><a href="#About" id="#nav2">About</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <div data-role="popup" id="pop" data-overlay-theme="b" style = "text-align:center;">
+            <p id = "disMes2" style = "font-size: 24px;"><br><strong></strong><br><br></p>
+        </div>
+        <ul id = "list2" data-role="listview" data-icon="arrow-r" data-inset="true" data-filter="false" data-theme="d" style="white-space: normal">
+            <li class="contentLink2" style = "height: 100px"; text-align:center;><a href="#" data-transition="slide" data-rel="popup" class="contentLink2" style = "font-size: 16px; text-decoration: none; color: black; white-space: normal; margin-top: 5px; height: 100px;" data-entryid="5">OpenMRS Developers</a></li>
+            <li class="contentLink2" style = "height: 100px"; text-align:center;><a href="#" data-transition="slide" data-rel="popup" class="contentLink2" style = "font-size: 16px; text-decoration: none; color: black; white-space: normal; margin-top: 5px; height: 100px;" data-entryid="1">OpenMRS Implementers</a></li>
+			<li class="contentLink2" style = "height: 100px"; text-align:center;><a href="#" data-transition="slide" data-rel="popup" class="contentLink2" style = "font-size: 16px; text-decoration: none; color: black; white-space: normal; margin-top: 5px; height: 100px;" data-entryid="6">OpenMRS Announcements</a></li>
+            <li class="contentLink2" style = "height: 100px"; text-align:center;><a href="#" data-transition="slide" data-rel="popup" class="contentLink2" style = "font-size: 16px; text-decoration: none; color: black; white-space: normal; margin-top: 5px; height: 100px;" data-entryid="2">Bamboo Build Results</a></li>
+            <li class="contentLink2" style = "height: 100px"; text-align:center;><a href="#" data-transition="slide" data-rel="popup" class="contentLink2" style = "font-size: 16px; text-decoration: none; color: black; white-space: normal; margin-top: 5px; height: 100px;" data-entryid="3">Bamboo Failed Builds</a></li>
+            <li class="contentLink2" style = "height: 100px"; text-align:center;><a href="#" data-transition="slide" data-rel="popup" class="contentLink2" style = "font-size: 16px; text-decoration: none; color: black; white-space: normal; margin-top: 5px; height: 100px;" data-entryid="4">OpenMRS Screencasts</a></li>
+            <li class="contentLink2" style = "height: 100px"; text-align:center;><a href="#" data-transition="slide" data-rel="popup" class="contentLink2" style = "font-size: 16px; text-decoration: none; color: black; white-space: normal; margin-top: 5px; height: 100px;" data-entryid="7">Subversion Commits</a></li>
+            <li class="contentLink2" style = "height: 100px"; text-align:center;><a href="#" data-transition="slide" data-rel="popup" class="contentLink2" style = "font-size: 16px; text-decoration: none; color: black; white-space: normal; margin-top: 5px; height: 100px;" data-entryid="8">FishEye</a></li>
+            <li class="contentLink2" style = "height: 100px"; text-align:center;><a href="#" data-transition="slide" data-rel="popup" class="contentLink2" style = "font-size: 16px; text-decoration: none; color: black; white-space: normal; margin-top: 5px; height: 100px;" data-entryid="9">Crucible</a></li>
+        </ul> 
+    </div>
+</div>
+<div data-role="page" id = "mainPage">
+
+    <div data-role="header" data-theme="b" data-tap-toggle="false" height:"50px;" style = "text-align:center;">
+        <img src = "media/omrs.png"/>
+    </div>
+
+    <div data-role="content">   
+        <ul id = "list" data-role="listview" data-icon="arrow-r" data-inset="true" data-filter="false" data-theme="d" style="white-space: normal">
+
+        </ul> 
+    </div>
+
+    <div data-role="footer" data-theme="b" data-position="fixed" style = "text-align:center; height: 50px;">
+        <div data-role="navbar">
+            <ul id = "navigation">
+                <li><a href="#viewPage" data-rel="back" id = "back" data-transition="slide">Back</a></li>
+                <li><a href="#refreshit" id = "refresh" data-theme="b" data-position-to="window">Refresh</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="DisplayPage">
+    <div data-role="header" data-theme="b" style = "white-space: normal;">
+        <h1 style = "font-size: 23px; white-space: normal; margin-left: auto; margin-right: auto; width: 300px;" id = "titleText"></h1>
+    </div>
+
+    <div data-role="content" id = "article" style = "overflow: auto;">
+    </div>
+
+
+    <div data-role="footer" data-theme="b" data-position="fixed" style = "text-align:center; height: 50px;">
+        <div data-role="navbar">
+            <ul id = "navigation">
+                <li><a href="#mainPage" data-rel="back" id = "back" data-transition="slide">Back</a></li>
+                <li><a href="#share" id = "share" data-transition="slide">Share</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="About">
+    <div data-role="header" data-theme="b" data-tap-toggle="false" height:"50px;" style = "text-align:center;">
+        <img src = "media/omrs.png"/>
+        <div data-role="navbar">
+            <ul id = "navigation">
+                <li><a href="#viewPage" id="#nav1">Home</a></li>
+                <li><a href="#About" id="#nav2" class="ui-btn-active ui-state-persist">About</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="content" data-theme="b">
+        <h1>About OpenMRS</h1>
+        <p>The global OpenMRS community works together to build the world's leading open source enterprise electronic medical record system platform.</p>
+		<p><a href = "http://openmrs.org/">Learn More</a></p>
+	    <h1>Contribute this App</h1>
+        <p>Open Source code of this App Available at <a href = "https://github.com/harshadura/OpenMRS-Planet-Updates">Github</a>. Contribute if you know a way to make this App better. File an <a href = "https://github.com/harshadura/OpenMRS-Planet-Updates/issues">issue</a> if you have any problems or suggestions.</p>
+		<p>[Release v1.0 Jan'2013, @harshadura]</p>
+ 
+		
+    </div>
+</div>
+
+<script type = "text/javascript">
+    $(document).ready(function() {
+        function refresh() {
+                var storage = window.localStorage;
+                var xml = ['https://groups.google.com/a/openmrs.org/group/dev/feed/rss_v2_0_topics.xml','https://groups.google.com/a/openmrs.org/group/implementers/feed/rss_v2_0_topics.xml','https://groups.google.com/a/openmrs.org/group/announce/feed/rss_v2_0_topics.xml','https://ci.openmrs.org/rss/createAllBuildsRssFeed.action?feedType=rssAll','https://ci.openmrs.org/rss/createAllBuildsRssFeed.action?feedType=rssFailed','http://gdata.youtube.com/feeds/base/users/OpenMRS/uploads?alt=rss&v=2&orderby=published&client=ytapi-youtube-profile','https://groups.google.com/a/openmrs.org/group/svn/feed/rss_v2_0_topics.xml','https://source.openmrs.org/?view=fe&RSS=true','https://source.openmrs.org/?view=cru&RSS=true'];
+                var xml1 = ['https://ci.openmrs.org/rss/createAllBuildsRssFeed.action?feedType=rssAll','https://ci.openmrs.org/rss/createAllBuildsRssFeed.action?feedType=rssFailed','http://gdata.youtube.com/feeds/base/users/OpenMRS/uploads?alt=rss&v=2&orderby=published&client=ytapi-youtube-profile'];
+                var xml2 = ['https://groups.google.com/a/openmrs.org/group/dev/feed/rss_v2_0_topics.xml','https://groups.google.com/a/openmrs.org/group/announce/feed/rss_v2_0_topics.xml','https://groups.google.com/a/openmrs.org/group/svn/feed/rss_v2_0_topics.xml','https://source.openmrs.org/?view=fe&RSS=true','https://source.openmrs.org/?view=cru&RSS=true'];
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET",feed,false); 
+                xmlhttp.send();
+                xmlDoc = xmlhttp.responseXML; //Get the xml
+                items = xmlDoc.getElementsByTagName("item");
+                var titlelist = "";
+                var datelist = "";
+                var descriptionlist = "";
+                var linklist = "";
+                var list = "";
+                var authorlist = "";
+                var thekey = "afjdai0eufjiodkoasj90fjieokdasfhnkjkqwecc439021ujc";
+                for (i = 0; i < items.length; i++) { 
+                        var title = items[i].getElementsByTagName("title")[0];
+                        var date = items[i].getElementsByTagName("pubDate")[0];;
+                        var description = items[i].getElementsByTagName("description")[0];
+                        var link = items[i].getElementsByTagName("link")[0];
+                        var author = items[i].getElementsByTagName("author")[0];
+                        if ((typeof title === "undefined")) {
+                            title = "No Title"
+                        }
+                        else
+                        {
+                            title = title.childNodes[0];
+                            if ((typeof title === "undefined")) {
+                                title = "No Title";
+                            }
+                            else {
+                                title = title.nodeValue;
+                            }
+
+                        }
+                        if ((typeof date === "undefined")) {
+                            date = "No Date"
+                        }
+                        else
+                        {
+                            date = date.childNodes[0];
+                            if ((typeof date === "undefined")) {
+                                date = "No Date";
+                            }
+                            else {
+                                date = date.nodeValue;
+                            }
+
+                        }
+                        if ((typeof description === "undefined")) {
+                            description = "No Description"
+                        }
+                        else
+                        {
+                            description = description.childNodes[0];
+                            if ((typeof description === "undefined")) {
+                                description = "No Description";
+                            }
+                            else {
+                                description = description.nodeValue;
+                            }
+
+                        }
+
+                        if ((typeof link === "undefined")) {
+                            link = "No Link"
+                        }
+                        else
+                        {
+                            link = link.childNodes[0];
+                            if ((typeof link === "undefined")) {
+                                link = "No Link";
+                            }
+                            else {
+                                link = link.nodeValue;
+                            }
+
+                        }
+
+                        if ((typeof author === "undefined")) {
+                            author = "No Author";
+                        }
+                        else
+                        {
+                            author = author.childNodes[0];
+                            if ((typeof author === "undefined")) {
+                                author = "No Author";
+                            }
+                            else {
+                                author = author.nodeValue;
+                            }
+
+                        }
+                        titlelist += title + thekey;
+                        datelist += date + thekey;
+                        descriptionlist += description + thekey;
+                        linklist += link + thekey;
+                        authorlist += author + thekey;
+                        list += '<li class="contentLink" style = "min-height: 100px"; text-align:center;><a href="#" data-transition="slide" class="contentLink" style = "font-size: 16px; text-decoration: none; color: black; white-space: normal; margin-top: 5px;" data-entryid2="'+i+'">' + title + '<br><br><p>' + date + '</p><br></a></li>'; //Create the list
+                    }  
+                titlelist = titlelist.slice(0, -50);
+                datelist = datelist.slice(0, -50);
+                descriptionlist = descriptionlist.slice(0, -50);
+                linklist = linklist.slice(0, -50);
+                authorlist = authorlist.slice(0, -50);
+                storage.setItem((feed+"title"), titlelist);
+                storage.setItem((feed+"date"), datelist);
+                storage.setItem((feed+"description"), descriptionlist);
+                storage.setItem((feed+"link"), linklist);
+                storage.setItem((feed+"author"), authorlist);
+                storage.setItem(feed, list);
+                list = localStorage.getItem(feed);
+                $("#list").empty();
+                $("#list").append(list);
+                $("#list").listview("refresh");
+                $.mobile.loading('hide');
+                $(".contentLink").bind("click", function() { //Capture link click
+                    $("#article").empty();
+                    selected = $(this).data("entryid2");
+                    if (typeof selected !== "undefined") { //Check if everything is okay
+                        selectedEntry = selected;
+                    }
+                    window.location = "#DisplayPage"; //View the content
+                });
+                }
+        var xml = ['https://groups.google.com/a/openmrs.org/group/implementers/feed/rss_v2_0_topics.xml','https://ci.openmrs.org/rss/createAllBuildsRssFeed.action?feedType=rssAll','https://ci.openmrs.org/rss/createAllBuildsRssFeed.action?feedType=rssFailed','http://gdata.youtube.com/feeds/base/users/OpenMRS/uploads?alt=rss&v=2&orderby=published&client=ytapi-youtube-profile','https://groups.google.com/a/openmrs.org/group/dev/feed/rss_v2_0_topics.xml','https://groups.google.com/a/openmrs.org/group/announce/feed/rss_v2_0_topics.xml','https://groups.google.com/a/openmrs.org/group/svn/feed/rss_v2_0_topics.xml','https://source.openmrs.org/?view=fe&RSS=true','https://source.openmrs.org/?view=cru&RSS=true'];
+        document.addEventListener("deviceready", onDeviceReady, false);
+        $(".contentLink2").bind("click", function() { //Capture link click
+            selected = $(this).data("entryid");
+            document.getElementById("disMes2").innerHTML = "Loading Feed...";
+            if (typeof selected !== "undefined") { //Check if everything is okay
+                feed = xml[(selected-1)];
+                window.location = "#mainPage"; //View the content
+            }
+        });
+        $("#mainPage").bind("pageshow", function(prepage) {
+            $("#list").empty();
+            var storage = window.localStorage;
+            if (storage.getItem(feed)) {
+                list = localStorage.getItem(feed)
+                $("#list").append(list);
+                $("#list").listview("refresh");
+                $(".contentLink").bind("click", function() { //Capture link click
+                    $("#article").empty();
+                    selected = $(this).data("entryid2");
+                    if (typeof selected !== "undefined") { //Check if everything is okay
+                        selectedEntry = selected;
+                    }
+                    window.location = "#DisplayPage"; //View the content
+                });
+            }
+            else {
+                $.mobile.loading('show', {
+                    theme: "e",
+                    text: "\nLoading Feed...\n",
+                    textonly: "true",
+                    textVisible: true
+                });
+                setTimeout(function(){refresh()}, 5);
+
+            }
+
+            $("#refresh").click(function() {
+                $.mobile.loading('show', {
+                    theme: "e",
+                    text: "\nLoading Feed...\n",
+                    textonly: "true",
+                    textVisible: true
+                });
+                setTimeout(function(){refresh()}, 50);
+            });
+
+            $("#DisplayPage").bind("pagebeforeshow", function(prepage) {
+                var thekey = "afjdai0eufjiodkoasj90fjieokdasfhnkjkqwecc439021ujc";
+                var titlelist = storage.getItem(feed+"title") //get title name
+                var titlelist = titlelist.split(thekey);
+                var title = titlelist[selectedEntry];
+                var author = storage.getItem(feed+"author").split(thekey)[selectedEntry];
+                var link = storage.getItem(feed+"link").split(thekey)[selectedEntry];
+                document.getElementById("titleText").innerHTML = title; //Set title
+                var contentlist = storage.getItem(feed+"description");
+                var contentlist = contentlist.split(thekey);
+                var content = contentlist[selectedEntry];
+                var content = content+"<br><br>By: " + author + "<br><br><a href = '"+ link + "'>Read More Here</a>"
+                $("#article").html(content); //Preload content
+
+                $("a").click(function(event) {
+                    event.preventDefault(); //Stop links from opening
+                    href = this.href; //Get link from the link that was clicked
+                    if ((href != "file:///android_asset/www/index.html#mainPage") && (href != "file:///android_asset/www/index.html#") && (href != "file:///android_asset/www/index.html#share") && (href != "file:///android_asset/www/index.html#Favorites") && (href != "file:///android_asset/www/index.html#About") && (href != "file:///android_asset/www/index.html#addFavorite") && (href != "file:///android_asset/www/index.html#refresh") && (href != "file:///android_asset/www/index.html#viewPage") && (href != "file:///android_asset/www/index.html#refreshit")){ //Make sure none of these links were clicked
+                        window.plugins.childBrowser.showWebPage(href, { showLocationBar: true }); //Open the link in a childbrowser in order to prevent glitches as well as to make it easier to get back to using the app
+                    }
+                });
+                $("#share").unbind("click").click(function() {
+                    var thekey = "afjdai0eufjiodkoasj90fjieokdasfhnkjkqwecc439021ujc";
+                    var linklist = storage.getItem(feed+"link");
+                    var linklist = linklist.split(thekey);
+                    var link = linklist[selectedEntry];
+                    window.plugins.share.show({ //Let the user able to share the article easily
+                        subject: 'Article on Fedora Planet',
+                        text: 'Here is a cool article I found on Fedora Planet:\n' + link},
+                        function() {}, // Success function
+                        function() {alert('Share failed')} // Failure function
+                    );
+                });
+            });
+        });
+
+            function onDeviceReady() {
+                navigator.splashscreen.hide();
+            }
+    });
+
+</script>
+</body>
+</html>

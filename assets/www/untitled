@@ -1,0 +1,201 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>My Page</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">$(document).bind("mobileinit", function () {  $.mobile.defaultPageTransition = "none"; });</script>
+    <script type="text/javascript" src="js/jquery.mobile-1.2.0.min.js"></script>
+    <script src="cordova-2.2.0.js"></script>
+    <script src ="childbrowser.js"></script>
+    <script src ="share.js"></script>
+</head> 
+<body> 
+
+<div data-role="page" id = "mainPage">
+
+    <div data-role="header" data-theme="b" data-tap-toggle="false" height:"50px;">
+        <h1 style = "font-size: 23px; white-space: normal;">Planet Fedora</h1>
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#mainPage" id="#nav1" class="ui-btn-active ui-state-persist">Home</a></li>
+                <li><a href="#Favorites" id="#nav2">Favorites</a></li>
+                <li><a href="#About" id="#nav3">About</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="content">   
+        <ul id = "list" data-role="listview" data-icon="arrow-r" data-inset="true" data-filter="false" data-theme="d" style="white-space: normal">
+
+        </ul> 
+    </div>
+
+</div>
+
+<div data-role="page" id="DisplayPage">
+    <div data-role="header" data-theme="b" style = "white-space: normal;">
+        <h1 style = "font-size: 23px; white-space: normal; margin-left: auto; margin-right: auto; width: 300px;" id = "titleText"></h1>
+    </div>
+
+    <div data-role="content" id = "article" style = "overflow: auto;">
+    </div>
+
+    <div data-role="popup" id="addFavorite" data-overlay-theme="b" style = "text-align:center;">
+        <p style = "font-size: 24px;"><br><strong>Successfully added to favorites.<strong><br><br><p>
+    </div>
+
+    <div data-role="footer" data-theme="b" data-position="fixed" style = "text-align:center; height: 50px;">
+        <div data-role="navbar">
+            <ul id = "navigation">
+                <li><a href="#mainPage" data-rel="back" id = "back" data-transition="slide">Back</a></li>
+                <li><a href="#addFavorite" id = "add" data-transition="pop" data-rel = "popup" data-position-to="window">Favorite</a></li>
+                <li><a href="#share" id = "share" data-transition="slide">Share</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="About">
+    <div data-role="header" data-theme="b" data-tap-toggle="false" height:"50px;">
+        <h1 style = "font-size: 23px; white-space: normal;">Planet Fedora</h1>
+        <div data-role="navbar">
+            <ul id = "navigation">
+                <li><a href="#mainPage" id="#nav1">Home</a></li>
+                <li><a href="#Favorites" id="#nav2">Favorites</a></li>
+                <li><a href="#About" id="#nav3" class="ui-btn-active ui-state-persist">About</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="Favorites">
+    <div data-role="header" data-theme="b" data-tap-toggle="false" height:"50px;">
+        <h1 style = "font-size: 23px; white-space: normal;">Planet Fedora</h1>
+        <div data-role="navbar">
+            <ul id = "navigation">
+                <li><a href="#mainPage" id="#nav1">Home</a></li>
+                <li><a href="#Favorites" id="#nav2" class="ui-btn-active ui-state-persist">Favorites</a></li>
+                <li><a href="#About" id="#nav3">About</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="content" id="favoriteContent"  style = "overflow: auto;">
+        <ul id = "list2" data-role="listview" data-icon="arrow-r" data-inset="true" data-filter="false" data-theme="d" style="white-space: normal">
+
+        </ul> 
+    </div>
+</div>
+
+<script type = "text/javascript">
+    $(document).ready(function() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var selectedEntry = "";
+        var feed = "http://planet.fedoraproject.org/rss20.xml";
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET",feed,false); 
+        xmlhttp.send();
+        xmlDoc = xmlhttp.responseXML; //Get the xml
+        items = xmlDoc.getElementsByTagName("item"); //Get each item individually
+        var list = "";
+        for (i = 0; i < items.length; i++) { 
+                var des = (items[i].getElementsByTagName("title")[0].childNodes[0].nodeValue);
+                var index = des.indexOf(": ");
+                var splits = [des.slice(0,index), des.slice(index+2)]; //Seperate the author from the title
+                var author = splits[0];
+                var title = splits[1];
+                var date = (items[i].getElementsByTagName("pubDate")[0].childNodes[0].nodeValue).split(" +0000")[0];
+                var description = items[i].getElementsByTagName("description")[0].childNodes[0].nodeValue;
+                var i1 = (items[i].getElementsByTagName("description")[0].childNodes[0].nodeValue).indexOf("<img");
+                var i2 = (items[i].getElementsByTagName("description")[0].childNodes[0].nodeValue).indexOf(';">');
+                var img = description.slice(i1,i2)+';">';
+                list += '<li class="contentLink" style = "height: 160px"; text-align:center;><a href="#" data-transition="slide" class="contentLink" style = "font-size: 16px; text-decoration: none; color: black; white-space: normal; margin-top: 5px;" data-entryid="'+i+'">' + img + title + '<h3>By: ' + author + '</h3><p>' + date + '</p><br></a></li>'; //Create the list
+            }
+
+        $("#list").append(list);
+        $("#list").listview("refresh");
+        $(".contentLink").bind("click", function() { //Capture link click
+            $("#article").empty();
+            selected = $(this).data("entryid");
+            if (typeof selected !== "undefined") { //Check if everything is okay
+                selectedEntry = selected;
+            }
+            window.location = "#DisplayPage"; //View the content
+        });
+
+        $("#DisplayPage").bind("pagebeforeshow", function(prepage) {
+            var des = (items[selectedEntry].getElementsByTagName("title")[0].childNodes[0].nodeValue); //get title name
+            var index = des.indexOf(": "); //Split 
+            var splits = [des.slice(0,index), des.slice(index+2)];
+            var title = splits[1]
+            document.getElementById("titleText").innerHTML = title; //Set title
+            content = items[selectedEntry].getElementsByTagName("description")[0].childNodes[0].nodeValue; //  
+            $("#article").append(content); //Preload content
+
+            $("a").click(function(event) {
+                event.preventDefault(); //Stop links from opening
+                href = this.href; //Get link from the link that was clicked
+                if ((href != "file:///android_asset/www/index.html#mainPage") && (href != "file:///android_asset/www/index.html#") && (href != "file:///android_asset/www/index.html#share") && (href != "file:///android_asset/www/index.html#Favorites") && (href != "file:///android_asset/www/index.html#About") && (href != "file:///android_asset/www/index.html#addFavorite")) { //Make sure none of these links were clicked
+                    window.plugins.childBrowser.showWebPage(href, { showLocationBar: true }); //Open the link in a childbrowser in order to prevent glitches as well as to make it easier to get back to using the app
+                }
+            });
+            $("#share").click(function() {
+                window.plugins.share.show({ //Let the user able to share the article easily
+                    subject: 'Article on Fedora Planet',
+                    text: 'Here is a cool article I found on Fedora Planet:\n'   + items[selectedEntry].getElementsByTagName("link")[0].childNodes[0].nodeValue},
+                    function() {}, // Success function
+                    function() {alert('Share failed')} // Failure function
+                );
+            });
+            $("#add").click(function() {
+                alert("hi");
+                var storage = window.localStorage;
+                var key = "cm4io2318ew0iodsjfa08p1o2j3mrdfsc";
+                var value = items[selectedEntry];
+                alert(value);
+                storage.setItem((key+selectedEntry), value);
+
+            });
+        });
+        $("#Favorites").bind("pageinit", function() {
+            var localStorageKeys = Object.keys(localStorage);
+            var localStorageValues = [];
+            for (var i = 0; i<=localStorageKeys.length-1; i++)
+            {
+              if (localStorageKeys[i].indexOf("cm4io2318ew0iodsjfa08p1o2j3mrdfsc") != -1)
+                {
+                localStorageValue = window.localStorage.getItem(localStorageKeys[i]);
+                var des = (localStorageValue.getElementsByTagName("title")[0].childNodes[0].nodeValue);
+                var index = des.indexOf(": ");
+                var splits = [des.slice(0,index), des.slice(index+2)]; //Seperate the author from the title
+                var author = splits[0];
+                var title = splits[1];
+                var date = (localStorageValue.getElementsByTagName("pubDate")[0].childNodes[0].nodeValue).split(" +0000")[0];
+                var description = localStorageValue.getElementsByTagName("description")[0].childNodes[0].nodeValue;
+                var i1 = (localStorageValue.getElementsByTagName("description")[0].childNodes[0].nodeValue).indexOf("<img");
+                var i2 = (localStorageValue.getElementsByTagName("description")[0].childNodes[0].nodeValue).indexOf(';">');
+                var img = description.slice(i1,i2)+';">';
+                list += '<li class="contentLink" style = "height: 160px"; text-align:center;><a href="#" data-transition="slide" class="favContentLink" style = "font-size: 16px; text-decoration: none; color: black; white-space: normal; margin-top: 5px;" data-entryid="'+i+'">' + img + title + '<h3>By: ' + author + '</h3><p>' + date + '</p><br></a></li>'; //Create the list
+                }
+            }
+            $("#list").append(list);
+            $("#list").listview("refresh");
+            $(".favContentLink").bind("click", function() { //Capture link click
+                $("#favoriteContent").empty();
+                favSelected = $(this).data("entryid");
+                if (typeof favSelected !== "undefined") { //Check if everything is okay
+                    favSelectedEntry = favSelected;
+                }
+                window.location = "#DisplayFavPage"; //View the content
+            });
+        });
+        function onDeviceReady() {
+            navigator.splashscreen.hide();
+        }
+    });
+
+</script>
+</body>
+</html>
